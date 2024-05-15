@@ -41,16 +41,16 @@
       <div class="topinfoSelling">
         <div class="leftTop">
           <div class="imgContentTop">
-            <img :src="getImagePathChild(currentItem.ItemId)">
+            <img :src="getImagePathChild(script.currentItem.ItemId)">
           </div>
         </div>
         <div class="rightTop">
           <div class="wrapperRightTop">
             <div class="titleRightTop">
-              <span class="textRightTop">{{currentItem.nameItem}}</span>
+              <span class="textRightTop">{{script.currentItem.nameItem}}</span>
             </div>
             <div class="subTitleRightTop">
-              <span class="subTextRightTop">{{currentItem.categoryItem}}</span>
+              <span class="subTextRightTop">{{script.currentItem.categoryItem}}</span>
             </div>
           </div>
           <div class="infoRightTop">
@@ -110,16 +110,16 @@
       <div class="topinfoSelling">
         <div class="leftTop">
           <div class="imgContentTop">
-            <img :src="getImagePathChild(currentItem.ItemId)">
+            <img :src="getImagePathChild(script.currentItem.ItemId)">
           </div>
         </div>
         <div class="rightTop">
           <div class="wrapperRightTop">
             <div class="titleRightTop">
-              <span class="textRightTop">{{currentItem.nameItem}}</span>
+              <span class="textRightTop">{{script.currentItem.nameItem}}</span>
             </div>
             <div class="subTitleRightTop">
-              <span class="subTextRightTop">{{currentItem.categoryItem}}</span>
+              <span class="subTextRightTop">{{script.currentItem.categoryItem}}</span>
             </div>
           </div>
         </div>
@@ -152,6 +152,7 @@
     },
 
     sellItem() {
+      this.sendSellItem()
       this.$emit('toggleViewSell'); 
     }
     },

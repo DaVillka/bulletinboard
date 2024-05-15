@@ -194,7 +194,8 @@
           </div>
         </div>
       </div>
-      <ModalWindow :isVisible="isModalVisible" :image="selectedImage" :id="selectedId" @close="handleModalClose"></ModalWindow>
+      <ModalWindow :isVisible="isModalVisible" :image="selectedImage" :id="selectedId"
+                   @close="handleModalClose"></ModalWindow>
     </div>
   </div>
 </template>
@@ -214,15 +215,17 @@ import {executeClient} from './scripts/rage.js';
 export default {
   ...searchScript,
   components: {
-    ...searchScript.components,
     ModalWindow,
-    // SellingButton
   },
 
   created() {
     const timers = this.initializeTimers();
     this.slotTimers = timers;
     this.startTimers();
+  },
+
+  beforeUnmount() {
+    this.stopInterval();
   },
 
   data() {
@@ -238,7 +241,7 @@ export default {
       executeClient('announceboard.board.openSell')
     },
     notifyParentForSale() {
-      this.$emit('toggleViewSale'); 
+      this.$emit('toggleViewSale');
       executeClient('announceboard.board.changeSell')
     }
   },
