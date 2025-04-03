@@ -313,6 +313,7 @@ export default {
   },
 
   created() {
+<<<<<<< HEAD
     const timers = this.initializeTimers();
     this.slotTimers = timers;
     setInterval(() => {
@@ -325,7 +326,16 @@ export default {
     if (this.nowUpdate) {
       clearInterval(this.nowUpdate);
     }
+=======
+      const timers = this.initializeTimers();
+      this.slotTimers = timers;
+      this.startTimers();
+>>>>>>> 9e70ed6886b088e6fe439b9a622b53ce14d53c2f
   },
+
+  beforeUnmount() {
+      this.stopInterval();
+    },
 
   data() {
     return {

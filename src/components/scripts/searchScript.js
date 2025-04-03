@@ -203,6 +203,7 @@ export const searchScript = {
             this.commissionSum = (this.inputValue * rate).toFixed(2);
         },
 
+<<<<<<< HEAD
         showModal(event, item) {
             if (this.activeItem === item) {
                 this.hideModal();
@@ -424,6 +425,64 @@ export const searchScript = {
             const payloadString = JSON.stringify(payload);
 
             executeClient('announceboard.board.sellItem', payloadString);
+=======
+    toggleClosePrice() {
+      this.$emit('closeModalPrice');
+    },
+
+    openModalPrice(id){
+      this.pickedId = id;
+      this.modalPrice = true;
+    },
+
+    handleClosePrice (){ 
+      this.modalPrice = false;
+    },
+
+    handleClickOutside(event) {
+      if (this.$refs.gridSell && !this.$refs.gridSell.contains(event.target)) {
+        this.hideModal();
+      }
+    },
+
+    initializeTimers() {
+    const timers = this.components.map(component => {
+      const timeParts = component[4].split(':');
+      const seconds = parseInt(timeParts[0]) * 3600 + parseInt(timeParts[1]) * 60 + parseInt(timeParts[2]);
+      return {
+        id: component[0],
+        time: seconds,
+        expired: false,
+      };
+    });
+    return timers;
+  },
+
+  startTimers() {
+    let timerInterval;
+  
+    const updateTimers = () => {
+      this.slotTimers.forEach((timer) => {
+        if (timer.time > 0) {
+          timer.time--;
+        } else {
+          timer.expired = true;
+        }
+      });
+    };
+  
+    const startInterval = () => {
+      timerInterval = setInterval(updateTimers, 1000);
+    };
+  
+    const stopInterval = () => {
+      clearInterval(timerInterval);
+    };
+  
+    stopInterval();
+    startInterval();
+  },
+>>>>>>> 9e70ed6886b088e6fe439b9a622b53ce14d53c2f
 
             setTimeout(() => {
                 this.fetchDataFromBackend();
