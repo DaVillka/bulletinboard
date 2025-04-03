@@ -173,8 +173,6 @@ export const searchScript = {
     }, computed: {
         filteredComponents() {
             const checked = this.getCheckedCategories();
-            const fromHour = parseInt(this.searchFields.fromQuantity) || 0;
-            const upHour = parseInt(this.searchFields.upQuantity) || 24;
 
             return searchScript.components.filter(component => {
                 const itemNameMatch = component[1].toLowerCase().startsWith(this.searchFields.itemName.toLowerCase());
@@ -184,10 +182,7 @@ export const searchScript = {
                 const timer = this.slotTimers.find(t => t.id === component[0]);
                 if (!timer) return false;
 
-                const remainingHours = Math.floor(timer.time / 3600);
-                const timeMatch = remainingHours >= fromHour && remainingHours < upHour;
-
-                return itemNameMatch && storekeeperMatch && categoryOrSubcategoryMatch && timeMatch;
+                return itemNameMatch && storekeeperMatch && categoryOrSubcategoryMatch;
             });
         },
 
@@ -262,10 +257,8 @@ export const searchScript = {
 
         initializeTimers() {
             const timers = searchScript.components.map(component => {
-                const timeParts = component[4].split(':');
-                const seconds = parseInt(timeParts[0]) * 3600 + parseInt(timeParts[1]) * 60 + parseInt(timeParts[2]);
                 return {
-                    id: component[0], time: seconds, expired: false,
+                    id: component[0], expiredAt: component[4], expired: false,
                 };
             });
             return timers;
@@ -299,7 +292,7 @@ export const searchScript = {
         formatTime(seconds) {
             const hours = Math.floor(seconds / 3600);
             const minutes = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
+            const secs = Math.floor(seconds % 60);
             return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
         }, getCheckedCategories() {
             const checked = [];
@@ -385,7 +378,7 @@ export const searchScript = {
             this.stopTimers();
             searchScript.components = newComponents;
             this.slotTimers = this.initializeTimers(newComponents);
-            this.startTimers();
+            // this.startTimers();
         },
 
         updateLots(newLots) {
@@ -403,8 +396,8 @@ export const searchScript = {
         //   this.closeModal();
         // },
 
-        sendPurchaseConfirmation() {
-            const purchaseData = {id: searchScript.components[this.selectedId][12]};
+        sendPurchaseConfirmation(isBank) {
+            const purchaseData = {id: searchScript.components[this.selectedId][12], isBank: isBank};
             //console.log(`sendPurchaseConfirmation: ${JSON.stringify(purchaseData)}`)
             executeClient('announceboard.board.buyItem', JSON.stringify(purchaseData));
             this.closeModal();
@@ -508,7 +501,9 @@ export const searchScript = {
                 //            }, {name: 'conditionItem', percent: 100}, {name: 'conditionItem', percent: 100}], Category: { //категория
                 //            Name: 'Вооружение', SubCategories: ['Пистолет'] //подкатегории
                 //        }, SubItems: [ // айдишники
-                //            2, 2], IsOwner: true
+                //            2, 2],
+                //        IsOwner: true,
+                //        Count: 123
                 //    },
                 //    {
                 //        ItemId: 1, // Id предмета
@@ -525,13 +520,15 @@ export const searchScript = {
                 //            }, {name: 'conditionItem', percent: 100}, {name: 'conditionItem', percent: 100}], Category: { //категория
                 //            Name: 'Вооружение', SubCategories: ['Пистолет'] //подкатегории
                 //        }, SubItems: [ // айдишники
-                //            2, 2], IsOwner: true
+                //            2, 2],
+                //        IsOwner: true,
+                //        Count: 222
                 //    },
                 //]
                 let _datas = JSON.parse(data)
                 // eslint-disable-next-line
                 const newComponents = _datas.map((data, index) => {
-                    return [(index).toString(), data.Name, `$ ${data.Price}`, data.Owner, data.SellTime, `${data.Location} ${data.NpcName}`, data.Conditions.map(condition => condition.name), data.Conditions.map(condition => condition.percent), data.SubItems, data.Category.Name, data.Category.SubCategories.join(', '), data.ItemId, data.ItemUID, data.IsOwner];
+                    return [(index).toString(), data.Name, `$ ${data.Price}`, data.Owner, data.SellTime, `${data.Location} ${data.NpcName}`, data.Conditions.map(condition => condition.name), data.Conditions.map(condition => condition.percent), data.SubItems, data.Category.Name, data.Category.SubCategories.join(', '), data.ItemId, data.ItemUID, data.IsOwner, data.Count];
                 });
                 const newLots = _datas.filter(data => data.IsOwner === true).map((data, index) => {
                     //const newLots = _datas.map((data, index) => {

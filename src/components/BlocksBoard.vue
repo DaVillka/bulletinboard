@@ -14,7 +14,11 @@
               <span>НАЗВАНИЕ ПРЕДМЕТА</span>
             </div>
             <div class="inputSearch">
-              <input type="text" class="inputClick" v-model="searchFields.itemName">
+              <input
+                  type="text"
+                  class="inputClick"
+                  v-model="searchFields.itemName"
+              >
             </div>
           </div>
           <div class="variantsSearch">
@@ -22,7 +26,11 @@
               <span>КЛАДОВЩИК</span>
             </div>
             <div class="inputSearch">
-              <input type="text" class="inputClick" v-model="searchFields.storekeeper">
+              <input
+                  type="text"
+                  class="inputClick"
+                  v-model="searchFields.storekeeper"
+              >
             </div>
           </div>
           <div class="variantsSearch">
@@ -30,7 +38,11 @@
               <span>ВЛОЖЕННЫЕ ПРЕДМЕТЫ</span>
             </div>
             <div class="inputSearch">
-              <input type="text" class="inputClick" v-model="searchFields.nestedItem">
+              <input
+                  type="text"
+                  class="inputClick"
+                  v-model="searchFields.nestedItem"
+              >
             </div>
           </div>
           <div class="variantsSearch">
@@ -39,9 +51,17 @@
             </div>
             <div class="inputSearchDouble">
               <span class="textSearchDouble">ОТ</span>
-              <input type="text" class="inputClickSearchDouble" v-model="searchFields.fromQuantity">
+              <input
+                  type="text"
+                  class="inputClickSearchDouble"
+                  v-model="searchFields.fromQuantity"
+              >
               <span class="textSearchDouble">ДО</span>
-              <input type="text" class="inputClickSearchDouble" v-model="searchFields.upQuantity">
+              <input
+                  type="text"
+                  class="inputClickSearchDouble"
+                  v-model="searchFields.upQuantity"
+              >
             </div>
           </div>
           <div class="variantsSearch">
@@ -50,9 +70,17 @@
             </div>
             <div class="inputSearchDouble">
               <span class="textSearchDouble">ОТ</span>
-              <input type="text" class="inputClickSearchDouble" v-model="searchFields.secondFromQuantity">
+              <input
+                  type="text"
+                  class="inputClickSearchDouble"
+                  v-model="searchFields.secondFromQuantity"
+              >
               <span class="textSearchDouble">ДО</span>
-              <input type="text" class="inputClickSearchDouble" v-model="searchFields.secondUpQuantity">
+              <input
+                  type="text"
+                  class="inputClickSearchDouble"
+                  v-model="searchFields.secondUpQuantity"
+              >
             </div>
           </div>
           <div class="variantsSearch">
@@ -61,14 +89,26 @@
             </div>
             <div class="inputSearchDouble">
               <span class="textSearchDouble">ОТ</span>
-              <input type="text" class="inputClickSearchDouble" v-model="searchFields.thirdFromQuantity">
+              <input
+                  type="text"
+                  class="inputClickSearchDouble"
+                  v-model="searchFields.thirdFromQuantity"
+              >
               <span class="textSearchDouble">ДО</span>
-              <input type="text" class="inputClickSearchDouble" v-model="searchFields.thirdUpQuantity">
+              <input
+                  type="text"
+                  class="inputClickSearchDouble"
+                  v-model="searchFields.thirdUpQuantity"
+              >
             </div>
           </div>
           <!-- setup button -->
           <div class="buttonResetBlock">
-            <button type="reset" class="buttonReset" @click="resetSearchFields">
+            <button
+                type="reset"
+                class="buttonReset"
+                @click="resetSearchFields"
+            >
               <span class="buttonResetText">СБРОСИТЬ</span>
             </button>
           </div>
@@ -79,32 +119,53 @@
           </div>
 
           <div class="listCategories">
-            <div class="blockCategory" v-for="(category, index) in categories" :key="index">
+            <div
+                class="blockCategory"
+                v-for="(category, index) in categories"
+                :key="index"
+            >
               <div class="lineCategory">
-                <div class="checkMark" @click="toggleCheckMark(category)">
-                  <div class="clickMark" v-show="category.checked"></div>
+                <div
+                    class="checkMark"
+                    @click="toggleCheckMark(category)"
+                >
+                  <div
+                      class="clickMark"
+                      v-show="category.checked"
+                  ></div>
                 </div>
                 <span>{{ category.name }}</span>
-                <div class="watchList" @click="toggleSubcategories(category)">
-                  <div class="clickList" :style="getClipPath(category.isOpen)"
-                       v-if="category.subcategories && category.subcategories.length"></div>
+                <div
+                    class="watchList"
+                    @click="toggleSubcategories(category)"
+                >
+                  <div
+                      class="clickList"
+                      :style="getClipPath(category.isOpen)"
+                      v-if="category.subcategories && category.subcategories.length"
+                  ></div>
                 </div>
-
-
               </div>
               <div v-if="category.isOpen">
-                <div class="lineSubcategory" v-for="(subcategory, subIndex) in category.subcategories"
-                     :key="`subcategory-${subIndex}`">
-                  <div class="checkMark" @click.stop="toggleSubcategoryCheckMark(subcategory, category)">
-                    <div class="clickMark" v-show="subcategory.checked"></div>
+                <div
+                    class="lineSubcategory"
+                    v-for="(subcategory, subIndex) in category.subcategories"
+                    :key="`subcategory-${subIndex}`"
+                >
+                  <div
+                      class="checkMark"
+                      @click.stop="toggleSubcategoryCheckMark(subcategory, category)"
+                  >
+                    <div
+                        class="clickMark"
+                        v-show="subcategory.checked"
+                    ></div>
                   </div>
                   <span>{{ subcategory.name }}</span>
                 </div>
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -116,12 +177,18 @@
         </div>
 
         <div class="buttonsWrapper">
-          <div class="selling" @click="notifyParentForSale">
+          <div
+              class="selling"
+              @click="notifyParentForSale"
+          >
             <button class="sellingButton">
               <span class="textSell">МОИ ОБЪЯВЛЕНИЯ</span>
             </button>
           </div>
-          <div class="selling" @click="notifyParent">
+          <div
+              class="selling"
+              @click="notifyParent"
+          >
             <button class="sellingButton">
               <span class="textSell">Продать предметы</span>
             </button>
@@ -144,8 +211,14 @@
           </div>
         </div>
         <div class="slot">
-          <div v-for="(component, index) in filteredComponents" :key="index">
-            <div class="actualSlot" @click="toggleModal(getImagePath(component[12]), component[0])">
+          <div
+              v-for="(component, index) in filteredComponents"
+              :key="index"
+          >
+            <div
+                class="actualSlot"
+                @click="toggleModal(getImagePath(component[12]), component[0])"
+            >
               <div class="lineSlot">
                 <div class="nameZone">
                   <div class="picItem">
@@ -154,9 +227,17 @@
                   <div class="infoItem">
                     <span>{{ component[1] }}</span>
                     <div class="setItems">
-                      <div v-for="(imageName, imgIndex) in component[8]" :key="imgIndex" class="setItem">
+                      <div
+                          v-for="(imageName, imgIndex) in component[8]"
+                          :key="imgIndex"
+                          class="setItem"
+                      >
                         <img :src="getImagePathChild(imageName)">
                       </div>
+                    </div>
+                    <!-- Add quantity display -->
+                    <div class="itemQuantity">
+                      <span>{{ component[14] }} шт.</span>
                     </div>
                   </div>
                 </div>
@@ -170,9 +251,8 @@
                       <span>{{ component[3] }}</span>
                     </div>
                     <div class="timing">
-                      <img src="./assets/svg/timing.svg">
-                      <span v-if="!slotTimers[component[0]].expired">
-                    {{ formatTime(slotTimers[component[0]].time) }}
+                      <img src="./assets/svg/timing.svg"><span v-if="slotTimers[component[0]].expiredAt > now">
+                    {{ formatTime(slotTimers[component[0]].expiredAt - now) }}
                   </span>
                       <span v-else>время истекло</span>
                       <!-- <span>{{ component[4] }}</span> -->
@@ -184,7 +264,11 @@
                   </div>
                 </div>
                 <div class="specificationsZone">
-                  <div v-for="(percentage, index) in component[7]" :key="index" class="conditionItem">
+                  <div
+                      v-for="(percentage, index) in component[7]"
+                      :key="index"
+                      class="conditionItem"
+                  >
                     <img :src="require(`./assets/svg/${component[6][index]}.svg`)">
                     <span>{{ percentage }}%</span>
                   </div>
@@ -194,8 +278,12 @@
           </div>
         </div>
       </div>
-      <ModalWindow :isVisible="isModalVisible" :image="selectedImage" :id="selectedId"
-                   @close="handleModalClose"></ModalWindow>
+      <ModalWindow
+          :isVisible="isModalVisible"
+          :image="selectedImage"
+          :id="selectedId"
+          @close="handleModalClose"
+      ></ModalWindow>
     </div>
   </div>
 </template>
@@ -204,13 +292,19 @@
 @import './style/blocksBoard.css';
 @import './style/search.css';
 @import './style/board.css';
+
+/* Add styles for the item quantity */
+.itemQuantity {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #ffffff;
+}
 </style>
 
 <script>
-import {searchScript} from './scripts/searchScript.js';
-import ModalWindow from '@/components/ModalWindow.vue';
-// import SellingButton from '@/components/SellingWindow.vue'
-import {executeClient} from './scripts/rage.js';
+import { searchScript } from "./scripts/searchScript.js";
+import ModalWindow from "@/components/ModalWindow.vue";
+import { executeClient } from "./scripts/rage.js";
 
 export default {
   ...searchScript,
@@ -221,32 +315,38 @@ export default {
   created() {
     const timers = this.initializeTimers();
     this.slotTimers = timers;
-    this.startTimers();
+    setInterval(() => {
+      this.now = Math.floor(Date.now() / 1000);
+    }, 1000);
   },
 
   beforeUnmount() {
     this.stopInterval();
+    if (this.nowUpdate) {
+      clearInterval(this.nowUpdate);
+    }
   },
 
   data() {
     return {
       ...searchScript.data(),
+
+      now: Math.floor(Date.now() / 1000),
+      nowUpdate: null,
     };
   },
   methods: {
     ...searchScript.methods,
 
     notifyParent() {
-      this.$emit('toggleViewSell');
-      executeClient('announceboard.board.openSell')
+      this.$emit("toggleViewSell");
+      executeClient("announceboard.board.openSell");
     },
     notifyParentForSale() {
-      this.$emit('toggleViewSale');
-      executeClient('announceboard.board.changeSell')
-    }
+      this.$emit("toggleViewSale");
+      executeClient("announceboard.board.changeSell");
+    },
   },
 
 };
 </script>
-
-
